@@ -1,12 +1,12 @@
 * English version: [README.en.md](README.en.md)
 
-# Měření konverzí Zboží.cz
+# Měření konverzí Seznam Nákupy
 
-Pro získání výhod spojených s měřením konverzí Zboží.cz, jakými jsou např. zjišťování spokojenosti zákazníků s nákupem nebo přístup ke statistikám výkonu přes API, je třeba zasílat informace z frontend měřícího kódu (JavaScript) i z vašeho backend rozhraní.
+Pro získání výhod spojených s měřením konverzí Seznam Nákupy, jakými jsou např. zjišťování spokojenosti zákazníků s nákupem nebo přístup ke statistikám výkonu přes API, je třeba zasílat informace z frontend měřícího kódu (JavaScript) i z vašeho backend rozhraní.
 
-Pro autentizaci a autorizaci se využívá ID provozovny a tajný klíč. Tyto údaje získáte v [administraci](https://admin.zbozi.cz), kde je také třeba schválit souhlas se smluvními podmínkami pro měření konverzí a uzavřít dohodu o zpracování osobních údajů.
+Pro autentizaci a autorizaci se využívá ID provozovny a tajný klíč. Tyto údaje získáte v [administraci](https://prodejce.seznam.cz/), kde je také třeba schválit souhlas se smluvními podmínkami pro měření konverzí a uzavřít dohodu o zpracování osobních údajů.
 
-Pro odladění a ověření funkčnosti své implementace měření konverzí můžete využít testovací prostředí – [Sandbox](http://sandbox.zbozi.cz). K dispozici je vám i [nápověda Zboží.cz](https://napoveda.zbozi.cz/konverzni-kod/standardni-konverzni-kod/)
+Pro odladění a ověření funkčnosti své implementace měření konverzí můžete využít testovací prostředí – [Sandbox](http://sandbox.zbozi.cz). K dispozici je vám i [nápověda](https://napoveda.sklik.cz/inzerce-nakupy/merici-a-konverzni-kod-zbozi-cz/)
 
 
 ## Předávaná data
@@ -17,7 +17,7 @@ Všechny textové údaje musí být v kódování `utf-8`. Znaky nepatřící do
 
 Název proměnné | Povinný       | Popis
 :------------- | :------------ | :---------
-zboziId | Ano | (int) ID provozovny, získáte v [administraci své provozovny](https://admin.zbozi.cz), případně na testovacím Sandboxu.
+zboziId | Ano | (int) ID provozovny, získáte v [administraci své provozovny](https://prodejce.seznam.cz/), případně na testovacím Sandboxu.
 orderId | Ano | (string, maximum 255 znaků) Číslo/kód objednávky vygenerovaný vaším e-shopem. Je třeba aby se shodovalo u frontend i backend konverzního kódu, aby mohly být údaje spojené.
 zboziType | Ne | (string) "standard" = standardní měření konverzí (default); "limited" = omezené měření; "sandbox" = testovací režim standardního měření
 consent | Ano | (int) Souhlas od návštěvníka na odeslání konverzního hitu, povolené hodnoty: 0 (není souhlas) nebo 1 (je souhlas). Podrobnější informace o souhlasu [najdete níže](#souhlas-u%C5%BEivatele-s-m%C4%9B%C5%99en%C3%ADm--consent).
@@ -25,7 +25,7 @@ eid | Doporučený | (string) E-mail zákazníka, lze posílat prostý text nebo
 aid | Doporučený | (objekt s adresou) Bydliště nebo poštovní adresa zákazníka. Posílejte, jen máte-li jeho výslovný souhlas. Obsahuje pole a1 až a6, popis je [v dokumentaci identity (sekce Adresa)](https://vyvojari.seznam.cz/identita/adresa).
 tid | Doporučený | (string) Telefonní číslo zákazníka, ve formátu +420724123456. Posílejte, jen máte-li jeho výslovný souhlas. Podrobný popis je [v dokumentaci identity (sekce Telefonní číslo)](https://vyvojari.seznam.cz/identita/telefon).
 id | Ne | (int) ID konverzního kódu Sklik, používá se pro měření konverzí v Skliku
-value | Ne | (int) Hodnota objednávky v Kč; pro měření konverzí v Skliku, standardní měření konverzí Zboží.cz ji nezohledňuje
+value | Ne | (int) Hodnota objednávky v Kč; pro měření konverzí v Skliku, standardní měření konverzí Seznam Nákupy ji nezohledňuje
 
 
 #### Souhlas uživatele s měřením – consent
@@ -58,9 +58,9 @@ Frontend kód by měl být na stránce zobrazující se po odeslání/potvrzení
     }
 
     var conversionConf = {
-        zboziId: ID_PROVOZOVNY, // ID provozovny na Zboží
+        zboziId: ID_PROVOZOVNY, // ID provozovny dle Centra prodejce
         orderId: "CISLO OBJEDNAVKY",  // Číslo objednávky
-        zboziType: "standard", // Typ měření konverzí Zboží.cz, pro testovací režim uvádějte "sandbox"
+        zboziType: "standard", // Typ měření konverzí Seznam Nákupy, pro testovací režim uvádějte "sandbox"
         consent: SOUHLAS, // Souhlas od návštěvníka na odeslání konverzního hitu
         
         id: SKLIK_ID, // ID konverzního kódu Skliku (pro měření konverzí i pro Sklik)
@@ -88,8 +88,8 @@ Používáte-li na webu omezení Content Security Policy, je nutné aby povolova
 ### Autentizace a autorizace
 Název proměnné | Povinný       | Popis
 :------------- | :------------ | :---------
-SHOP_ID | Ano | (int) ID provozovny, získáte v [administraci své provozovny](https://admin.zbozi.cz), případně na testovacím Sandboxu.
-PRIVATE_KEY | Ano | (string, maximum 255 znaků) Tajný klíč využívaný výhradně pro autorizaci požadavků z backendu, získáte také v [administraci své provozovny](https://admin.zbozi.cz), případně na testovacím Sandboxu. Při prozrazení tohoto kódu si vygenerujte nový.
+SHOP_ID | Ano | (int) ID provozovny, získáte v [administraci své provozovny](https://prodejce.seznam.cz/), případně na testovacím Sandboxu.
+PRIVATE_KEY | Ano | (string, maximum 255 znaků) Tajný klíč využívaný výhradně pro autorizaci požadavků z backendu, získáte také v [administraci své provozovny](https://prodejce.seznam.cz/), případně na testovacím Sandboxu. Při prozrazení tohoto kódu si vygenerujte nový.
 
 ### Vlastnosti objednávky
 
@@ -98,7 +98,7 @@ Název proměnné | Povinný       | Popis
 orderId | Ano | (string, maximum 255 znaků) Číslo objednávky vygenerované e-shopem. Je třeba, aby se shodovalo u dat zaslaných z frontendu i backendu, aby mohlo dojít k jejich spojení.
 email | Doporučený | (email, maximum 100 znaků) E-mail zákazníka. Může být využit pro ověření spokojenosti s nákupem a k žádosti o ohodnocení zakoupeného produktu. Nezasílat v případě, kdy zákazník neudělil souhlas s jeho poskytnutím. Vizte též sekci [eid vs. email](#eid-vs-email).
 cart | Ano | (array) Obsah nákupního košíku.
-deliveryType | Doporučený | (string, maximum 100 znaků) Způsob dopravy, pokud možno [DELIVERY_ID z feedu](https://napoveda.zbozi.cz/xml-feed/specifikace/#DELIVERY )
+deliveryType | Doporučený | (string, maximum 100 znaků) Způsob dopravy, pokud možno [DELIVERY_ID z feedu](https://napoveda.sklik.cz/reklamy/xml-feed/specifikace/#DELIVERY )
 deliveryPrice | Doporučený | (number) Cena dopravy v Kč včetně DPH. (Znaménkový 32bitový integer, 0 – (2<sup>31</sup>-1)/100.)
 otherCosts | Doporučený | (number) Další náklady či slevy na objednávku, platbu kartou, instalace, množstevní sleva apod. Slevy jsou uvedeny jako záporné číslo. (Znaménkový 32bitový integer, -2<sup>31</sup>/100 – (2<sup>31</sup>-1)/100.)
 paymentType | Ne | (string, maximum 100 znaků) Způsob platby. Může být libovolný řetězec (např. kartou, hotovost apod.).
